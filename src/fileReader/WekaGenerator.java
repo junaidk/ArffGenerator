@@ -28,8 +28,8 @@ public class WekaGenerator {
     atts.addElement(new Attribute("att1"));
     // - nominal
     attVals = new FastVector();
-    for (i = 0; i < 5; i++)
-      attVals.addElement("val" + (i+1));
+    //for (i = 0; i < 5; i++)
+    //	attVals.addElement("");
     
     atts.addElement(new Attribute("att2", attVals));
     
@@ -52,13 +52,14 @@ public class WekaGenerator {
     // 2. create Instances object
     data = new Instances("MyRelation", atts, 0);
 
+    System.out.println(data);
     // 3. fill with data
     // first instance
     vals = new double[data.numAttributes()];
     // - numeric
     vals[0] = Math.PI;
     // - nominal
-    vals[1] = attVals.indexOf("val3");
+    //vals[1] = attVals.indexOf("");
     // - string
     vals[2] = data.attribute(2).addStringValue("This is a string!");
     // - date

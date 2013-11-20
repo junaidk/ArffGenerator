@@ -16,7 +16,7 @@ public class ReadPnml {
 	public static NodeList p ;
 	public static NodeList a ;
 	
-	public static HashMap<String, List<Arc>> transitionsAndArcs ;
+	private HashMap<String, List<Arc>> transitionsAndArcs ;
 
 	public  ReadPnml(String dirPath, String fileName ) {
 		
@@ -31,6 +31,12 @@ public class ReadPnml {
 		
 	}
 	
+	public HashMap<String, List<Arc>> getTransitionsAndArcs(){
+		
+		return this.transitionsAndArcs;
+	}
+	
+/*	
 	public static void main(String[] args){
 		
 		
@@ -39,7 +45,7 @@ public class ReadPnml {
 		String path = dir + "orig.pnml";
 		
 		ReadPnml rp = new ReadPnml(dir,"orig.pnml");
-		
+*/		
 //		Document d = rp.readFileToDocument(path);
 		
 //		t = d.getElementsByTagName("transition");
@@ -109,7 +115,7 @@ public class ReadPnml {
 		}
 		
 */		
-
+/*
 		rp.initTransitionsAndArcsMap();
 		rp.addArcsToMap();
 		
@@ -131,19 +137,12 @@ public class ReadPnml {
 			}
 			
 		}
-
-		
-		/*Transition tx =  new Transition();
-		tx.transitionId = (t.item(3).getAttributes()).item(0).toString();
-		tx.transitionName = t.item(3).getChildNodes().item(0).getChildNodes().item(0).getTextContent().toString();
-		*/
 		
 		System.out.println(rp.getIdToTransitionMapping());
-		
-		//System.out.println(transitionsAndArcs);
+
 				
 	}
-	
+*/	
 	// initialize transitions and arcs hash map with all transitions 
 	// and startig outgoing arcs
 	public void initTransitionsAndArcsMap(){
@@ -228,7 +227,25 @@ public class ReadPnml {
 		return idToNameMap;
 	}
 	
-	
+	// get transition id to transition mapping
+		public HashMap<String, String> getTransitionToIdMapping(){
+			
+			HashMap<String, String > idToNameMap = new HashMap<>();
+			String transitionId,transitionName;
+			
+			for (int i=0 ; i < t.getLength(); i++){
+				
+				transitionId = (t.item(i).getAttributes()).item(0).toString().split("=")[1];
+				transitionName = t.item(i).getChildNodes().item(0).getChildNodes().item(0).getTextContent().toString();
+				
+				idToNameMap.put(transitionName,transitionId);
+				
+			}
+			
+			
+			return idToNameMap;
+		}
+		
 	// gives arc where given place is starting point
 	// arg : placeID
 	public List<Arc> getArcsForSrc(String srcID){
@@ -279,6 +296,8 @@ public class ReadPnml {
 		}
 		return null;
 	}
+	
+	
 }
 
 class Arc{
